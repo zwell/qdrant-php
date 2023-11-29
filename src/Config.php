@@ -12,9 +12,12 @@ class Config
 {
 
     protected ?string $apiKey = null;
-
-    public function __construct(protected string $host, protected int $port = 6333)
+    protected string $host;
+    protected string $port;
+    public function __construct(string $host, int $port = 6333)
     {
+        $this->host = $host;
+        $this->port = $port;
     }
 
     public function getDomain(): string

@@ -12,8 +12,11 @@ class Range extends AbstractCondition implements ConditionInterface
 {
     protected const CONDITIONS = ['gt', 'gte', 'lt', 'lte'];
 
-    public function __construct(string $key, protected array $ranges)
+    protected array $ranges;
+
+    public function __construct(string $key, array $ranges)
     {
+        $this->ranges = $ranges;
         parent::__construct($key);
         Assert::keysExistsAtLeastOne(
             $ranges,

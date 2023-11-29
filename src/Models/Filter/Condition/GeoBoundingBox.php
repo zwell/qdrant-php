@@ -12,8 +12,11 @@ class GeoBoundingBox extends AbstractCondition implements ConditionInterface
 {
     protected const CONDITIONS = ['bottom_right', 'top_left'];
 
-    public function __construct(string $key, protected array $boundingBox)
+    protected array $boundingBox;
+
+    public function __construct(string $key, array $boundingBox)
     {
+        $this->boundingBox = $boundingBox;
         parent::__construct($key);
         Assert::keysExists(
             $boundingBox,

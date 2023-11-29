@@ -12,8 +12,11 @@ class ValueCount extends AbstractCondition implements ConditionInterface
 {
     protected const CONDITIONS = ['gt', 'gte', 'lt', 'lte'];
 
-    public function __construct(string $key, protected array $valueCount)
+    protected array $valueCount;
+
+    public function __construct(string $key, array $valueCount)
     {
+        $this->valueCount = $valueCount;
         parent::__construct($key);
         Assert::keysExistsAtLeastOne(
             $valueCount,

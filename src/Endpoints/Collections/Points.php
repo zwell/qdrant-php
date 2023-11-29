@@ -18,6 +18,7 @@ use Qdrant\Models\PointsStruct;
 use Qdrant\Models\Request\PointsBatch;
 use Qdrant\Models\Request\RecommendRequest;
 use Qdrant\Models\Request\ScrollRequest;
+use Qdrant\Models\Request\SearchBatchRequest;
 use Qdrant\Models\Request\SearchRequest;
 use Qdrant\Response;
 
@@ -45,7 +46,21 @@ class Points extends AbstractEndpoint
     /**
      * @throws InvalidArgumentException
      */
-    public function scroll(Filter|ScrollRequest $scrollParams = null, array $queryParams = []): Response
+    public function searchBatch(SearchBatchRequest $searchParams): Response
+    {
+        return $this->client->execute(
+            $this->createRequest(
+                'POST',
+                'collections/' . $this->collectionName . '/points/search/batch',
+                $searchParams->toArray()
+            )
+        );
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function scroll($scrollParams = null, array $queryParams = []): Response
     {
         $body = [];
         if ($scrollParams instanceof Filter) {
@@ -115,7 +130,7 @@ class Points extends AbstractEndpoint
     /**
      * @throws InvalidArgumentException
      */
-    public function id(int|string $id, array $queryParams = []): Response
+    public function id($id, array $queryParams = []): Response
     {
         return $this->client->execute(
             $this->createRequest(

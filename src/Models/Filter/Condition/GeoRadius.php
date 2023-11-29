@@ -12,8 +12,11 @@ class GeoRadius extends AbstractCondition implements ConditionInterface
 {
     protected const CONDITIONS = ['center', 'radius'];
 
-    public function __construct(string $key, protected array $radius)
+    protected array $radius;
+
+    public function __construct(string $key, array $radius)
     {
+        $this->radius = $radius;
         parent::__construct($key);
         Assert::keysExists(
             $radius, self::CONDITIONS, 'Radius expects %s key'

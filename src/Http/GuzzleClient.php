@@ -13,14 +13,18 @@ use Psr\Http\Message\RequestInterface;
 use Qdrant\Config;
 use Qdrant\Exception\InvalidArgumentException;
 use Qdrant\Exception\ServerException;
+use Qdrant\Exception\UnknownException;
 use Qdrant\Response;
 
 class GuzzleClient implements HttpClientInterface
 {
     protected Client $client;
 
-    public function __construct(protected Config $config)
+    protected Config $config;
+
+    public function __construct(Config $config)
     {
+        $this->config = $config;
         $this->client = new Client([
             'base_uri' => $this->config->getDomain(),
             'http_errors' => true,
@@ -63,6 +67,10 @@ class GuzzleClient implements HttpClientInterface
             } elseif ($statusCode >= 500) {
                 $errorResponse = new Response($e->getResponse());
                 throw (new ServerException($e->getMessage(), $statusCode))
+                    ->setResponse($errorResponse);
+            } else {
+                $errorResponse = new Response($e->getResponse());
+                throw (new UnknownException($e->getMessage(), $statusCode))
                     ->setResponse($errorResponse);
             }
         }

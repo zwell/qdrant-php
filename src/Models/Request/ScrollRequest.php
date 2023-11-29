@@ -14,41 +14,41 @@ class ScrollRequest implements RequestModel
 
     protected ?int $limit = null;
 
-    protected int|string|null $offset = null;
+    protected $offset = null;
 
-    protected bool|array|null $withVector = null;
+    protected $withVector = null;
 
-    protected bool|array|null $withPayload = null;
+    protected $withPayload = null;
 
-    public function setFilter(Filter $filter): static
+    public function setFilter(Filter $filter): self
     {
         $this->filter = $filter;
 
         return $this;
     }
 
-    public function setLimit(int $limit): static
+    public function setLimit(int $limit): self
     {
         $this->limit = $limit;
 
         return $this;
     }
 
-    public function setOffset(int|string $offset): static
+    public function setOffset($offset): self
     {
         $this->offset = $offset;
 
         return $this;
     }
 
-    public function setWithPayload($withPayload): static
+    public function setWithPayload($withPayload): self
     {
         $this->withPayload = $withPayload;
 
         return $this;
     }
 
-    public function setWithVector($withVector): static
+    public function setWithVector($withVector): self
     {
         $this->withVector = $withVector;
 

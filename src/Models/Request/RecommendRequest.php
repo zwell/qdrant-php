@@ -19,40 +19,44 @@ class RecommendRequest
     protected ?int $limit = null;
     protected ?int $offset = null;
     protected ?float $scoreThreshold = null;
+    protected array $positive;
+    protected array $negative = [];
 
-    public function __construct(protected array $positive, protected array $negative = [])
+    public function __construct(array $positive, array $negative = [])
     {
+        $this->positive = $positive;
+        $this->negative = $negative;
     }
 
-    public function setFilter(Filter $filter): static
+    public function setFilter(Filter $filter): self
     {
         $this->filter = $filter;
 
         return $this;
     }
 
-    public function setScoreThreshold(float $scoreThreshold): static
+    public function setScoreThreshold(float $scoreThreshold): self
     {
         $this->scoreThreshold = $scoreThreshold;
 
         return $this;
     }
 
-    public function setUsing(string $using): static
+    public function setUsing(string $using): self
     {
         $this->using = $using;
 
         return $this;
     }
 
-    public function setLimit(int $limit): static
+    public function setLimit(int $limit): self
     {
         $this->limit = $limit;
 
         return $this;
     }
 
-    public function setOffset(int $offset): static
+    public function setOffset(int $offset): self
     {
         $this->offset = $offset;
 

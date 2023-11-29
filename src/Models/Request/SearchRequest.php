@@ -23,68 +23,71 @@ class SearchRequest
 
     protected ?int $offset = null;
 
-    protected bool|array|null $withVector = null;
+    protected $withVector = null;
 
-    protected bool|array|null $withPayload = null;
+    protected $withPayload = null;
 
     protected ?float $scoreThreshold = null;
 
     protected ?string $name = null;
 
-    public function __construct(protected VectorStructInterface $vector)
+    protected VectorStructInterface $vector;
+
+    public function __construct(VectorStructInterface $vector)
     {
+        $this->vector = $vector;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function setFilter(Filter $filter): static
+    public function setFilter(Filter $filter): self
     {
         $this->filter = $filter;
 
         return $this;
     }
 
-    public function setScoreThreshold(float $scoreThreshold): static
+    public function setScoreThreshold(float $scoreThreshold): self
     {
         $this->scoreThreshold = $scoreThreshold;
 
         return $this;
     }
 
-    public function setParams(array $params): static
+    public function setParams(array $params): self
     {
         $this->params = $params;
 
         return $this;
     }
 
-    public function setLimit(int $limit): static
+    public function setLimit(int $limit): self
     {
         $this->limit = $limit;
 
         return $this;
     }
 
-    public function setOffset(int $offset): static
+    public function setOffset(int $offset): self
     {
         $this->offset = $offset;
 
         return $this;
     }
 
-    public function setWithPayload($withPayload): static
+    public function setWithPayload($withPayload): self
     {
         $this->withPayload = $withPayload;
 
         return $this;
     }
 
-    public function setWithVector($withVector): static
+    public function setWithVector($withVector): self
     {
         $this->withVector = $withVector;
 
