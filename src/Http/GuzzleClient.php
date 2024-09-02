@@ -60,20 +60,23 @@ class GuzzleClient implements HttpClientInterface
             return new Response($res);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            $statusCode = $response ? $response->getStatusCode() : 0;
-            if ($statusCode >= 400 && $statusCode < 500) {
-                $errorResponse = new Response($e->getResponse());
-                throw (new InvalidArgumentException($e->getMessage(), $statusCode))
-                    ->setResponse($errorResponse);
-            } elseif ($statusCode >= 500) {
-                $errorResponse = new Response($e->getResponse());
-                throw (new ServerException($e->getMessage(), $statusCode))
-                    ->setResponse($errorResponse);
-            } else {
-                $errorResponse = new Response($e->getResponse());
-                throw (new UnknownException($e->getMessage(), $statusCode))
-                    ->setResponse($errorResponse);
+            if ($response instanceof ResponseInterface) {
+                $statusCode = $response->getStatusCode();
+                if ($statusCode >= 400 && $statusCode < 500) {
+                    $errorResponse = new Response($response);
+                    throw (new InvalidArgumentException($e->getMessage(), $statusCode))
+                        ->setResponse($errorResponse);
+                } elseif ($statusCode >= 500) {
+                    $errorResponse = new Response($response);
+                    throw (new ServerException($e->getMessage(), $statusCode))
+                        ->setResponse($errorResponse);
+                } else {
+                    $errorResponse = new Response($response);
+                    throw (new UnknownException($e->getMessage(), $statusCode))
+                        ->setResponse($errorResponse);
+                }
             }
+            throw $e;
         }
     }
 }
