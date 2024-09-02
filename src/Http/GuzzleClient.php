@@ -10,6 +10,7 @@ use GuzzleHttp\Exception\RequestException;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Qdrant\Config;
 use Qdrant\Exception\InvalidArgumentException;
 use Qdrant\Exception\ServerException;
